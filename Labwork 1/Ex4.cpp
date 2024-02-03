@@ -15,7 +15,7 @@ int isSphenic(int n){
         }
     }
     if(n != 1) cnt_prime++;
-    
+
     if(cnt_prime == 3) return 1;
     return 0;
 }
@@ -23,6 +23,8 @@ int isSphenic(int n){
 int main(){
     printf("Please enter a natural number: ");
     int n; scanf("%d", &n);
-    if(isSphenic(n)) printf("%d is an Sphenic number", n);
-    else printf("%d is not an Sphenic number", n);
+    if(isSphenic(n)) 
+        printf("%d is an Sphenic number", n);
+    else 
+        printf("%d is not an Sphenic number", n);
 }
