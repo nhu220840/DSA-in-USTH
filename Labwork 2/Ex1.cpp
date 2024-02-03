@@ -9,8 +9,9 @@ typedef struct unboundedInt{
 } unboundedInt;
 
 unboundedInt* makeDigit(int num){
-    unboundedInt *newNode = new unboundedInt;
+    unboundedInt *newNode = (unboundedInt *)malloc(sizeof(unboundedInt));
     newNode->digit = num;
+    newNode->next = NULL;
     return newNode;
 }
 
