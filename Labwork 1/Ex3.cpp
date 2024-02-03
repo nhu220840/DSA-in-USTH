@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-struct complexNumber{
+typedef struct complexNumber{
     int real, vir;
 
     void enter(){
@@ -10,9 +10,7 @@ struct complexNumber{
     void print(){
         printf("%d + %di\n", real, vir);
     }
-};
-
-typedef complexNumber cN;
+}cN;
 
 //Addition:
 //a = x1 + y1i
