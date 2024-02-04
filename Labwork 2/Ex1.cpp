@@ -41,14 +41,25 @@ void addDigit(unboundedInt *&head, int num, int pos){
 }
 
 void rmDigit(unboundedInt *&head, int num, int pos){
-    if(pos < 1 || pos > countDigit(head) + 1) return;
+    if(pos < 1 || pos > countDigit(head) || head == NULL) return;
     unboundedInt *tmp = head;
     if(pos == 1){
-
+        unboundedInt *del = head;
+        head = head->next;
+        delete del;
+        return;
     }
+    for(int i = 1; i <= pos - 2; i++){
+        tmp = tmp->next;
+    }
+    unboundedInt *del = tmp->next;
+    tmp->next = del->next;
+    delete del;
 }
+
+
 
 int main(){
     unboundedInt *head = NULL;
-
+    
 }
