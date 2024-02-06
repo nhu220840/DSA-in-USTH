@@ -40,7 +40,7 @@ void addDigit(unboundedInt *&head, int num, int pos){
     tmp->next = newNode;
 }
 
-void rmDigit(unboundedInt *&head, int num, int pos){
+void removemDigit(unboundedInt *&head, int num, int pos){
     if(pos < 1 || pos > countDigit(head) || head == NULL) return;
     unboundedInt *tmp = head;
     if(pos == 1){
