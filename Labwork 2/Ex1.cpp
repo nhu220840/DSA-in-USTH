@@ -4,14 +4,13 @@
 #include <math.h>
 
 typedef struct unboundedInt{
-    int sign, digit;
+    int digit;
     unboundedInt *next;
 } unboundedInt;
 
-unboundedInt* makeDigit(int sign, int num){
+unboundedInt* makeDigit(int num){
     unboundedInt *newNode = (unboundedInt *)malloc(sizeof(unboundedInt));
     newNode->digit = num;
-    newNode->sign = sign;
     newNode->next = NULL;
     return newNode;
 }
@@ -25,35 +24,42 @@ int countDigit(unboundedInt *head){
     return res;
 }
 
-void pushFront(unboundedInt *&head, int num){
-    unboundedInt *newDigit = makeDigit(1, num);
-    newDigit->next = head;
-    head = newDigit;
+void initSign(unboundedInt *&head, int num){
+    if(head == NULL) 
+        head = makeDigit(num);
+    else{
+        unboundedInt *newNode = makeDigit(num);
+        newNode->next = head;
+        head = newNode;
+    }
 }
 
 void addDigit(unboundedInt *&head, int num, int pos){
     if(head == NULL){
-        printf("ERROR: List is empty\n");
+        printf("ERROR: List is empty!\n");
         return;
     }
     if(pos < 1 || pos > countDigit(head) + 1){
         printf("ERROR: The position is out of bound!\n");
         return;
     }
-    unboundedInt *newNode = makeDigit(1, num);
+    unboundedInt *newNode = makeDigit(num);
     if(pos == 1){
-        pushFront(head, num);
+        newNode->next = head->next; //bo qua phan tu dau tien do phan tu dau tien bieu thi dau
+        head->next = newNode;
     }
-    unboundedInt *tmp = head;
-    for(int i = 1; i <= pos - 2; i++){
-        tmp = tmp->next;
+    else{
+        unboundedInt *tmp = head->next;
+        for(int i = 1; i <= pos - 2; i++){
+            tmp = tmp->next;
+        }
+        newNode->next = tmp->next;
+        tmp->next = newNode;
     }
-    newNode->next = tmp->next;
-    tmp->next = newNode;
     printf("Added successfully!\n");
 }
 
-void removemDigit(unboundedInt *&head, int pos){
+void removeDigit(unboundedInt *&head, int pos){
     if(head == NULL){
         printf("ERROR: List is empty!\n");
         return;
@@ -87,18 +93,20 @@ void removemDigit(unboundedInt *&head, int pos){
 
 int sumDigits(unboundedInt *head){
     int sum = 0;
-    while(head->next != NULL){
-        sum += head->digit;
-        head = head->next;
+    unboundedInt *tmp = head->next; //bo qua phan tu dau tien vi no la dau
+    while(tmp != NULL){
+        sum += tmp->digit;
+        tmp = tmp->next;
     }
     return sum;
 }
 
 void display(unboundedInt *head){
-    if(head->sign == -1) printf("-");
-    while(head->next != NULL){
-        printf("%d", head->digit);
-        head = head->next;
+    unboundedInt *tmp = head->next; //bo qua phan tu dau tien
+    if(head->digit == -1) printf("-");
+    while(tmp != NULL){
+        printf("%d", tmp->digit);
+        tmp = tmp->next;
     }
     printf("\n");
 }
@@ -108,7 +116,10 @@ int main(){
     unboundedInt *head = NULL;
     printf("Init the sign of unbounded integer (1 is positive and -1 is negative): ");
     int sign; scanf("%d", &sign);
-    head = makeDigit(sign, 1);
+    if(sign < 0) 
+        initSign(head, -1);
+    else 
+        initSign(head, 1);
     while(true){
         printf("---------------------------------\n");
         printf("1. Add new digit\n");
@@ -130,7 +141,7 @@ int main(){
         else if(choice == 2){
             printf("Enter the position to remove: ");
             int pos; scanf("%d", &pos);
-            removemDigit(head, pos);
+            removeDigit(head, pos);
         }
         else if(choice == 3){
             printf("Sum of all digits is: %d\n", sumDigits(head));
@@ -139,6 +150,7 @@ int main(){
             display(head);
         }
         else{
+            printf("Exit!");
             return 0;
         }
     }
