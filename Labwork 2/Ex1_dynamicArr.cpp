@@ -24,11 +24,20 @@ void addDigit(UnboundedInt *num, int digit, int pos){
     num->size++;
     num->digits = (int *)realloc(num->digits, num->size * sizeof(int));
 
-    for(int i = num->size - 1; i > 0; i--){
-        num->digits[i] = num->digits[i - 1];
-    }
+    if(pos == 1){
+        for(int i = num->size - 1; i > 0; i--){
+            num->digits[i] = num->digits[i - 1];
+        }
 
-    num->digits[0] = digit;
+        num->digits[0] = digit;
+    }
+    else{
+        for(int i = num->size - 1; i > pos - 1; i--){
+            num->digits[i] = num->digits[i - 1];
+        }
+
+        num->digits[pos - 1] = digit;
+    }
 }
 
 void removeDigit(UnboundedInt *num, int pos){
