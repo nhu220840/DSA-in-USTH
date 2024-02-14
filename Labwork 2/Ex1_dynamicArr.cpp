@@ -64,36 +64,31 @@ void display(UnboundedInt *num){
 int main(){
     UnboundedInt *num = NULL;
     printf("Init the sign of unbounded integer (1 is positive and -1 is negative): ");
-    int sign;
-    scanf("%d", &sign);
+    int sign; scanf("%d", &sign);
     num = createUnboundedInt(sign);
 
     while(1){
-        printf("---------------------------------\n");
+        printf("----------------------------------\n");
         printf("1. Add new digit\n");
         printf("2. Remove a digit\n");
         printf("3. Calculate the sum of all digits\n");
         printf("4. Display the whole number\n");
         printf("0. Exit\n");
-        printf("---------------------------------\n");
+        printf("----------------------------------\n");
 
         printf("Enter your choice: ");
-        int choice;
-        scanf("%d", &choice);
+        int choice; scanf("%d", &choice);
 
         if(choice == 1){
             printf("Enter a digit: ");
-            int value;
-            scanf("%d", &value);
+            int value; scanf("%d", &value);
             printf("Enter the position to add: ");
-            int pos;
-            scanf("%d", &pos);
+            int pos; scanf("%d", &pos);
             addDigit(num, value, pos);
         } 
         else if(choice == 2){
             printf("Enter the position to remove: ");
-            int pos;
-            scanf("%d", &pos);
+            int pos; scanf("%d", &pos);
             removeDigit(num, pos);
         } 
         else if(choice == 3){
