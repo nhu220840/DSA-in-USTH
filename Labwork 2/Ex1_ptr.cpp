@@ -65,7 +65,7 @@ void removeDigit(unboundedInt *&head, int pos){
         return;
     }
     if(pos < 1 || pos > countDigit(head)){
-        printf("ERROR: The postition is out of bound!\n");
+        printf("ERROR: The position is out of bound!\n");
         return;
     }
     if(pos == 1){
