@@ -41,12 +41,12 @@ void addDigit(UnboundedInt *num, int digit, int pos){
 }
 
 void removeDigit(UnboundedInt *num, int pos){
-    if (pos < 0 || pos >= num->size){
+    if (pos < 0 || pos > num->size){
         printf("Invalid position!\n");
         return;
     }
 
-    for(int i = pos; i < num->size - 1; i++){
+    for(int i = pos - 1; i < num->size; i++){
         num->digits[i] = num->digits[i + 1];
     }
 
