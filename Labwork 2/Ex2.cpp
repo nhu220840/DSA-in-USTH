@@ -7,7 +7,7 @@ typedef struct{
     railroad *next;
 } railroad;
 
-railroad* makeCar(int passenger, char *id){
+railroad* makeNewCar(int passenger, char *id){
     railroad *newCar = (railroad *)malloc(sizeof(railroad));
     newCar->passenger = passenger;
     newCar->id = id;
@@ -18,9 +18,10 @@ railroad* makeCar(int passenger, char *id){
 
 int railroadLength(railroad *head){
     int count = 0;
-    while(head == NULL){
+    railroad *tmp = head;
+    while(tmp == NULL){
         count++;
-        head = head->next;
+        tmp = tmp->next;
     }
     return count;
 }
@@ -31,17 +32,40 @@ void addCar(railroad *&head, int passenger, char *id, int pos){
         return;
     }
     
-    railroad *newCar = makeCar(passenger, id);
-    if(head == NULL){
+    railroad *newCar = makeNewCar(passenger, id);
+    if(pos == 1){
+        newCar->next = head;
         head = newCar;
         return;
     }
 
-    while(head->next == NULL){
-        head = head->next;
+    railroad *tmp = head;
+    for(int i = 1; i < pos - 1; i++){
+        tmp = tmp->next;
     }
-    head->next = newCar;
-}   
+    newCar->next = tmp->next;
+    tmp->next = newCar;
+}
+
+void removeEmptyCar(railroad *&head){
+    if(head == NULL){
+        printf("The railroad train is empty!!!");
+        return;
+    }
+
+    railroad *tmp = head;
+    while(tmp->passenger == 0){
+        
+    }
+}
+
+void display(railroad *head){
+    railroad *tmp = head;
+    printf("The length of the railroad train is %d\n\n", railroadLength(head));
+    while(tmp == NULL){
+        printf("Passenger: %d, ID: %s\n", tmp->passenger, tmp->id);
+    }
+}
 
 int main(){
     railroad *head = NULL;
