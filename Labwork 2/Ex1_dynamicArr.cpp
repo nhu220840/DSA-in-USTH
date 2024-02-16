@@ -110,6 +110,8 @@ int main(){
             printf("Exit!");
             free(num->digits);
             free(num);
+            return 0;
         }
     }
+    return 0;
 }
