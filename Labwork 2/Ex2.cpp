@@ -17,13 +17,13 @@ railroad* makeNewCar(int passenger, char *id){
 }
 
 int railroadLength(railroad *head){
-    int count = 0;
+    int length = 0;
     railroad *tmp = head;
     while(tmp == NULL){
-        count++;
+        length++;
         tmp = tmp->next;
     }
-    return count;
+    return length;
 }
 
 void addCar(railroad *&head, int passenger, char *id, int pos){
@@ -55,7 +55,7 @@ void removeEmptyCar(railroad *&head){
 
     railroad *tmp = head;
     while(tmp->passenger == 0){
-        
+
     }
 }
 
