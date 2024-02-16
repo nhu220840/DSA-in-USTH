@@ -26,24 +26,29 @@ int railroadLength(railroad *head){
     return length;
 }
 
-void addCar(railroad *&head, int passenger, char *id, int pos){
-    if(pos < 1 || pos > railroadLength(head) + 1){
-        printf("ERROR: Invalid position!!!");
-        return;
-    }
+void addCar(railroad *&head, int passenger, char *id /*, int pos*/){
+    // if(pos < 1 || pos > railroadLength(head) + 1){
+    //     printf("ERROR: Invalid position!!!");
+    //     return;
+    // }
     
     railroad *newCar = makeNewCar(passenger, id);
-    if(pos == 1){
-        newCar->next = head;
-        head = newCar;
-        return;
-    }
+    // if(pos == 1){
+    //     newCar->next = head;
+    //     head = newCar;
+    //     return;
+    // }
 
     railroad *tmp = head;
-    for(int i = 1; i < pos - 1; i++){
+    // for(int i = 1; i < pos - 1; i++){
+    //     tmp = tmp->next;
+    // }
+    // newCar->next = tmp->next;
+    // tmp->next = newCar;
+
+    while(tmp->next == NULL){
         tmp = tmp->next;
     }
-    newCar->next = tmp->next;
     tmp->next = newCar;
 }
 
