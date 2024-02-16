@@ -72,7 +72,7 @@ void removeDigit(unboundedInt *&head, int pos){
         free(del); //giai phong node dau tien
         return;
     }
-    unboundedInt *tmp = head;
+    unboundedInt *tmp = head->next; //bo qua phan tu dau tien vi no luu dau 
     for(int i = 1; i <= pos - 2; i++){
         tmp = tmp->next; //duyet den vi tri truoc node can xoa 
     }
