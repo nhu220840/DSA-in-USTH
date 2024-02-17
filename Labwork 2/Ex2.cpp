@@ -52,7 +52,7 @@ void addCar(railroad *&head, int passenger, char *id /*, int pos*/){
     // newCar->next = tmp->next;
     // tmp->next = newCar;
 
-    while(tmp->next == NULL){
+    while(tmp->next != NULL){
         tmp = tmp->next;
     }
     tmp->next = newCar;
@@ -90,7 +90,7 @@ void removeEmptyCars(railroad *&head){
 
 void displayCars(railroad *head){
     railroad *tmp = head;
-    printf("The length of the railroad train is %d\n\n", railroadLength(head));
+    printf("The length of the railroad train is %d\n", railroadLength(head));
     while(tmp != NULL){
         printf("Passenger: %d, ID: %s\n", tmp->passenger, tmp->id);
         tmp = tmp->next;
@@ -114,8 +114,8 @@ int main(){
         printf("-----------------------------------------------\n");
         printf("1. Add more car to the railroad train\n");
         printf("2. Remove all empty cars in the railroad train\n");
-        printf("3. Display all cars of the railroad train");
-        printf("0. Exit");
+        printf("3. Display all cars of the railroad train\n");
+        printf("0. Exit\n");
         printf("-----------------------------------------------\n");
 
         printf("Enter your choice: ");
