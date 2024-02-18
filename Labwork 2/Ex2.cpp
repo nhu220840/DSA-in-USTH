@@ -2,15 +2,17 @@
 #include <stdlib.h>
 
 typedef struct railroad{
-    int passenger;
+    int maximumCapacity;
+    int numberOfPassengers;
     char *id;
     railroad *next;
     railroad *prev;
 } railroad;
 
-railroad* makeNewCar(int passenger, char *id){
+railroad* makeNewCar(int maximumCapacity, int passenger, char *id){
     railroad *newCar = (railroad *)malloc(sizeof(railroad));
-    newCar->passenger = passenger;
+    newCar->maximumCapacity = maximumCapacity;
+    newCar->numberOfPassengers = passenger;
     newCar->id = id;
     newCar->next = NULL;
     newCar->prev = NULL;
@@ -28,13 +30,17 @@ int railroadLength(railroad *head){
     return length;
 }
 
-void addCar(railroad *&head, int passenger, char *id /*, int pos*/){
+void addCar(railroad *&head, int maximumCapacity, int passenger, char *id /*, int pos*/){
     // if(pos < 1 || pos > railroadLength(head) + 1){
     //     printf("ERROR: Invalid position!!!");
     //     return;
     // }
     
-    railroad *newCar = makeNewCar(passenger, id);
+    railroad *newCar = makeNewCar(maximumCapacity ,passenger, id);
+    if(newCar->maximumCapacity < newCar->numberOfPassengers){
+        printf("The car is overloaded!!!\n");
+        return;
+    }
     if(head == NULL){
         head = newCar;
         return;
@@ -61,13 +67,13 @@ void addCar(railroad *&head, int passenger, char *id /*, int pos*/){
 
 void removeEmptyCars(railroad *&head){
     if(head == NULL){
-        printf("The railroad train is empty!!!");
+        printf("The railroad train is empty!!!\n");
         return;
     }
 
     railroad *tmp = head;
     while(tmp != NULL){
-        if(tmp->passenger == 0){
+        if(tmp->numberOfPassengers == 0){
             if(tmp->prev == NULL){
                 head = head->next;
                 free(tmp);
@@ -86,14 +92,20 @@ void removeEmptyCars(railroad *&head){
             tmp = tmp->next;
         }
     }
+    printf("Removed successfully!!!\n");
 }
 
 void displayCars(railroad *head){
     railroad *tmp = head;
-    printf("The length of the railroad train is %d\n", railroadLength(head));
-    while(tmp != NULL){
-        printf("Passenger: %d, ID: %s\n", tmp->passenger, tmp->id);
-        tmp = tmp->next;
+    if(railroadLength(head) == 0){
+        printf("The railroad train is empty!!!\n");
+    }
+    else{
+        printf("The length of the railroad train is %d\n", railroadLength(head));
+        while(tmp != NULL){
+            printf("Passenger: %d, ID: %s\n", tmp->numberOfPassengers, tmp->id);
+            tmp = tmp->next;
+        }
     }
 }
 
@@ -101,13 +113,19 @@ int main(){
     railroad *head = NULL;
     printf("Enter the number of cars of railroad train: ");
     int cars; scanf("%d", &cars);
-    printf("Enter the passenger(s) and ID of each cars:\n");
-    for(int i = 1; i <= cars; i++){
-        printf("Information of car %d: ", i);
-        int passenger;
-        char *id =(char *)malloc(sizeof(char) * 100);
-        scanf("%d %s", &passenger, id);
-        addCar(head, passenger, id);
+    if(cars != 0){
+        printf("Enter the passenger(s) and ID of each cars:\n");
+        for(int i = 1; i <= cars; i++){
+            printf("Information of car %d:\n", i);
+            printf("The maximum capacity of car %d is: ", i);
+            int maximumCapacity; scanf("%d", &maximumCapacity);
+            printf("The number of passenger(s): ");
+            int passenger; scanf("%d", &passenger);
+            char *id =(char *)malloc(sizeof(char) * 100);
+            printf("ID of car: ");
+            scanf("%s", id);
+            addCar(head, maximumCapacity, passenger, id);
+        }
     }
     
     while(1){
@@ -123,16 +141,17 @@ int main(){
 
         if(choice == 1){
             printf("Enter the information of car:\n");
+            printf("The maximum capacity of car is: ");
+            int maximumCapacity; scanf("%d", &maximumCapacity);
             printf("The number of passenger(s): ");
             int passenger; scanf("%d", &passenger);
             printf("ID of car: ");
             char *id =(char *)malloc(sizeof(char));
             scanf("%s", id);
-            addCar(head, passenger, id);
+            addCar(head, maximumCapacity, passenger, id);
         }
         else if(choice == 2){
             removeEmptyCars(head);
-            printf("Removed successfully!!!\n");
         }
         else if(choice == 3){
             displayCars(head);
@@ -143,17 +162,5 @@ int main(){
         }
     }
     return 0;
-    // printf("Do you want to remove all empty cars? (Y/N)\n");
-    // char choice; scanf("%c", &choice);
-    // if(choice == 'Y'){
-        
-    // }
-    // printf("The state of railroad train is:\n");
-    // displayCars(head);
-    // printf("Do you want to add more car to the railroad train? (Y/N)\n");
-    // scanf("%c", &choice);
-    // if(choice == 'Y'){
-        
-    // }
 }
     
