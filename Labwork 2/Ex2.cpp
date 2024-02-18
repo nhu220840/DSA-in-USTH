@@ -39,6 +39,7 @@ void addCar(railroad *&head, int maximumCapacity, int passenger, char *id /*, in
     railroad *newCar = makeNewCar(maximumCapacity ,passenger, id);
     if(newCar->maximumCapacity < newCar->numberOfPassengers){
         printf("The car is overloaded!!!\n");
+        printf("Cannot add to the railroad!!!\n");
         return;
     }
     if(head == NULL){
@@ -97,10 +98,8 @@ void removeEmptyCars(railroad *&head){
             // di chuyen tmp den node tiep theo
             tmp = nextNode; //tmp = tmp->next;
         }
-        else{
-            // di chuyen tmp den node tiep theo
-            tmp = tmp->next;
-        }
+        else
+            tmp = tmp->next; // di chuyen tmp den node tiep theo
     }
 
     printf("Removed successfully!!!\n");
@@ -114,7 +113,7 @@ void displayCars(railroad *head){
     else{
         printf("The length of the railroad train is %d\n", railroadLength(head));
         while(tmp != NULL){
-            printf("Passenger: %d, ID: %s\n", tmp->numberOfPassengers, tmp->id);
+            printf("Maximum capacity: %d, Passenger(s): %d, Car's ID: %s\n",tmp->maximumCapacity, tmp->numberOfPassengers, tmp->id);
             tmp = tmp->next;
         }
     }
@@ -173,6 +172,7 @@ int main(){
         }
         else{
             printf("Your choice is not invalid!!!\n");
+            printf("Please enter again\n");
         }
     }
     return 0;
