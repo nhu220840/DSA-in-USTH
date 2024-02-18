@@ -72,26 +72,37 @@ void removeEmptyCars(railroad *&head){
     }
 
     railroad *tmp = head;
+
     while(tmp != NULL){
         if(tmp->numberOfPassengers == 0){
+            // Xac dinh node tiep theo truoc khi xoa
+            railroad *nextNode = tmp->next;
+
+            // Xoa tmp 
             if(tmp->prev == NULL){
-                head = head->next;
+                // tmp la node dau tien
+                head = nextNode;
+                if(nextNode != NULL)
+                    nextNode->prev = NULL;
                 free(tmp);
-                head->prev = NULL;
-                tmp = head;
-            }
+            } 
             else{
-                railroad *del = tmp;
-                del->prev->next = tmp->next;
-                free(del);
-                tmp = tmp->next;
+                // tmp ko phai la node dau tien
+                tmp->prev->next = nextNode;
+                if(nextNode != NULL)
+                    nextNode->prev = tmp->prev;
+                free(tmp);
             }
+
+            // di chuyen tmp den node tiep theo
+            tmp = nextNode; //tmp = tmp->next;
         }
         else{
-            tmp->prev = tmp;
+            // di chuyen tmp den node tiep theo
             tmp = tmp->next;
         }
     }
+
     printf("Removed successfully!!!\n");
 }
 
@@ -156,9 +167,12 @@ int main(){
         else if(choice == 3){
             displayCars(head);
         }
-        else{
+        else if(choice == 0){
             printf("Exit!!!");
             return 0;
+        }
+        else{
+            printf("Your choice is not invalid!!!\n");
         }
     }
     return 0;
