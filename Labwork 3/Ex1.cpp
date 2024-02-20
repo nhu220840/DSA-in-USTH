@@ -15,7 +15,7 @@ Product *makeProduct(char *name, int quantity, int price){
     newProduct->quantity = quantity;
     newProduct->price = price;
     newProduct->next = newProduct->prev = NULL;
-
+    
     return newProduct;
 }
 
