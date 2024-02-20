@@ -26,7 +26,11 @@ void addProduct(Product *head, char *name, int quantity, int price){
         head = newProduct;
         return;
     }
-    
+    while(head == NULL){
+        head = head->next;
+    }
+    head->next = newProduct;
+    newProduct->prev = head;
 }
 
 int main(){

@@ -22,10 +22,9 @@ railroad* makeNewCar(int maximumCapacity, int passenger, char *id){
 
 int railroadLength(railroad *head){
     int length = 0;
-    railroad *tmp = head;
-    while(tmp != NULL){
+    while(head != NULL){
         length++;
-        tmp = tmp->next;
+        head = head->next;
     }
     return length;
 }
@@ -52,12 +51,13 @@ void addCar(railroad *&head, int maximumCapacity, int passenger, char *id /*, in
     //     return;
     // }
 
-    railroad *tmp = head;
     // for(int i = 1; i < pos - 1; i++){
     //     tmp = tmp->next;
     // }
     // newCar->next = tmp->next;
     // tmp->next = newCar;
+
+    railroad *tmp = head;
 
     while(tmp->next != NULL){
         tmp = tmp->next;
