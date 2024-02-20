@@ -35,6 +35,10 @@ void addProduct(Product *&head, char *name, int quantity, int price){
     newProduct->prev = tmp;
 }
 
+// void removeProduct(Product *&head, char *name){
+
+// }
+
 // int validProductName(Product *head, char *name){
 //     Product *tmp = head;
 //     while(tmp != NULL){
@@ -84,6 +88,7 @@ void reStock(Product *&head, char *name, int quantity, int price){
         }
     }
     else{
+        //Add new product if it is not in the stock
         addProduct(head, name, quantity, price);
     }
 }
