@@ -75,7 +75,7 @@ int getProductQuantity(Product *head, char *name){
     return 0;
 }
 
-void reStock(Product *&head, char *name, int quantity, int price){
+void reQuantity(Product *&head, char *name, int quantity, int price){
     //The product is already in the stock, add more quantity
     if(getProductQuantity(head, name) != 0){
         Product *tmp = head;
@@ -91,6 +91,29 @@ void reStock(Product *&head, char *name, int quantity, int price){
         //Add new product if it is not in the stock
         addProduct(head, name, quantity, price);
     }
+}
+
+typedef struct Customer{
+    char *name;
+    char *product_name;
+    int product_quantity;
+    Customer *next;
+} Customer;
+
+typedef struct queue{
+    Customer *front;
+    Customer *back;
+    int size;
+} queue;
+
+void init(queue *line){
+    line->front = line->back = NULL;
+    line->size = 0;
+}
+
+void enqueue(queue *line, Product *&head, char *name, char *product_name, int product_quantity){
+    Product *product_choice = head;
+    
 }
 
 int main(){
