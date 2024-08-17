@@ -21,7 +21,7 @@ Product *makeProduct(char *name, int quantity, int price){
 }
 
 void addProduct(Product *&head, char *name, int quantity, int price){
-    Product *newProduct = (Product *)malloc(sizeof(Product));
+    Product *newProduct = makeProduct(name, quantity, price);
 
     if(head == NULL){
         head = newProduct;
@@ -185,7 +185,7 @@ typedef struct Customer{
 } Customer;
 
 Customer *makeCustomer(char *name, char *productName, int productQuantity){
-    Customer *newCustomer = (Customer *)malloc(sizeof(Customer));
+    Customer *newCustomer = makeCustomer(name, productName, productQuantity);
     newCustomer->name = name;
     newCustomer->productName = productName;
     newCustomer->productQuantity = productQuantity;
@@ -250,4 +250,6 @@ void enqueue(queue *customerQueue, Product *&head, char *name, char *productName
 
 int main(){
     Product *head = NULL;
+    queue *customerQueue = NULL;
+    init(customerQueue);
 }
