@@ -10,14 +10,14 @@ typedef struct complexNumber{
     void print(){
         printf("%d + %di\n", real, vir);
     }
-}cN;
+} complexNumber;
 
 //Addition:
 //a = x1 + y1i
 //b = x2 + y2i
 //a + b = (x1 + x2) + (y1 + y2)i
-cN addition(cN a, cN b){
-    cN res;
+complexNumber addition(complexNumber a, complexNumber b){
+    complexNumber res;
     res.real = a.real + b.real;
     res.vir = a.vir + b.vir;
     return res;
@@ -28,8 +28,8 @@ cN addition(cN a, cN b){
 //b = x2 + y2i
 //a * b = (x1.x2) + x1y2i + x2y1i - y1y2
 //      = (x1.x2 - y1.y2) + (x1y2 + x2y1)i
-cN multiplication(cN a, cN b){
-    cN res;
+complexNumber multiplication(complexNumber a, complexNumber b){
+    complexNumber res;
     res.real = a.real * b.real - a.vir * b.vir;
     res.vir = (a.real * b.vir + a.vir * b.real);
     return res;
@@ -37,7 +37,7 @@ cN multiplication(cN a, cN b){
 
 int main(){
     printf("Please enter components (real and virtual) of 2 complex numbers:\n");
-    cN a, b;
+    complexNumber a, b;
     a.enter();
     b.enter();
 

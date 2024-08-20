@@ -4,6 +4,7 @@
 // Pseudocode:
 // Input: a positive integer
 // Output: an integer after swapping the first and last digits
+
 // Process:
 // BEIGN
 //     Get num (char array)

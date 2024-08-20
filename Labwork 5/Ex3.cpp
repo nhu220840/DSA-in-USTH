@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the Node structure
 typedef struct Node{
     int data;
     struct Node *next;
 } Node;
 
-// Function to create a new node
 Node* makeNode(int data){
     Node *newNode = (Node *)malloc(sizeof(Node));
     newNode->data = data;
@@ -15,7 +13,6 @@ Node* makeNode(int data){
     return newNode;
 }
 
-// Function to print the linked list
 void printList(Node *head){
     Node *temp = head;
     while(temp != NULL){
@@ -25,7 +22,6 @@ void printList(Node *head){
     printf("\n");
 }
 
-// Function to find the position to insert a new node
 Node* findPosition(Node *head, int value){
     Node *current = head;
     Node *prev = NULL;
@@ -36,14 +32,13 @@ Node* findPosition(Node *head, int value){
     return prev;
 }
 
-// Function to perform insertion sort on the linked list
 void insertionSort(Node **head){
     Node *sorted = NULL;
     Node *current = *head;
     while(current != NULL){
         Node *next = current->next;
         Node *pos = findPosition(sorted, current->data);
-        if (pos == NULL){
+        if(pos == NULL){
             current->next = sorted;
             sorted = current;
         } 
@@ -58,14 +53,12 @@ void insertionSort(Node **head){
 
 int main(){
     Node *head = NULL;
-    int n, value;
-
     printf("Enter the size of the list: ");
-    scanf("%d", &n);
+    int n; scanf("%d", &n);
 
     printf("Enter the values: ");
     for(int i = 0; i < n; i++){
-        scanf("%d", &value);
+        int value; scanf("%d", &value);
         Node *newNode = makeNode(value);
         newNode->next = head;
         head = newNode;
