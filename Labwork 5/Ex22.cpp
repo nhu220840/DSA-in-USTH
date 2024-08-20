@@ -18,12 +18,6 @@ int findPosition(int a[], int n, int v){
     return n;
 }
 
-void swap(int *a, int *b){
-    int tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
-
 void printArray(int a[], int n){
 	for(int i = 0; i < n; i++){
 		printf("%d ", a[i]);
@@ -40,16 +34,21 @@ void insertionSortOptimize(int a[], int n){
 				a[j] = a[j-1];
 			}
 			a[pos] = value;  
+		    printArray(a, n);
 		}
-		printArray(a, n);
 	}
 }
 
 int main(){
-    int n; scanf("%d", &n); 
+    printf("Enter the size of the array: ");
+    int n; scanf("%d", &n);
     int a[n];
+    printf("Enter the value of each number in the array: ");
     for(int i = 0; i < n; i++){
         scanf("%d", &a[i]);
     }
+    printf("Sorting:\n");
 	insertionSortOptimize(a, n);
+    printf("The sorted array: ");
+    printArray(a, n);
 }
