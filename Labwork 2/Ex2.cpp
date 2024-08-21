@@ -20,7 +20,7 @@ railroad* makeNewCar(int maximumCapacity, int passenger, char *id){
     return newCar;
 }
 
-int railroadLength(railroad *head){
+int getRailroadLength(railroad *head){
     int length = 0;
     while(head != NULL){
         length++;
@@ -107,11 +107,11 @@ void removeEmptyCars(railroad *&head){
 
 void displayCars(railroad *head){
     railroad *tmp = head;
-    if(railroadLength(head) == 0){
+    if(getRailroadLength(head) == 0){
         printf("The railroad train is empty!!!\n");
     }
     else{
-        printf("The length of the railroad train is %d\n", railroadLength(head));
+        printf("The length of the railroad train is %d\n", getRailroadLength(head));
         while(tmp != NULL){
             printf("Maximum capacity: %d, Passenger(s): %d, Car's ID: %s\n",tmp->maximumCapacity, tmp->numberOfPassengers, tmp->id);
             tmp = tmp->next;
