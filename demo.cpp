@@ -6,8 +6,8 @@ typedef struct Product {
     char *name;
     int quantity;
     int price;
-    struct Product *next;
-    struct Product *prev;
+    Product *next;
+    Product *prev;
 } Product;
 
 typedef struct Customer {
@@ -15,7 +15,7 @@ typedef struct Customer {
     char *productName;
     int productQuantity;
     int totalPrice;
-    struct Customer *next;
+    Customer *next;
 } Customer;
 
 typedef struct queue {
