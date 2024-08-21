@@ -124,7 +124,7 @@ void removeProduct(Product *&head, char *name){
     free(prod_remove);
 }
 
-// int validProductName(Product *head, char *name){
+// int validateProductName(Product *head, char *name){
 //     Product *tmp = head;
 //     while(tmp != NULL){
 //         if(tmp->name == name){
@@ -135,7 +135,7 @@ void removeProduct(Product *&head, char *name){
 //     return 0;
 // }
 
-int validProductQuantity(Product *head, char *name, int quantity){
+int validateProductQuantity(Product *head, char *name, int quantity){
     Product *tmp = head;
     
     while(tmp != NULL){
@@ -152,7 +152,7 @@ int getProductQuantity(Product *head, char *name){
     Product *tmp = head;
 
     while(tmp != NULL){
-        if(tmp->name == name){
+        if(strcmp(tmp->name, name) == 0){
             return tmp->quantity;
         }
         tmp = tmp->next;
@@ -165,7 +165,7 @@ void resizeStorage(Product *&head, char *name, int quantity, int price){
     if(getProductQuantity(head, name) != 0){
         Product *tmp = head;
         while(tmp != NULL){
-            if(tmp->name == name){
+            if(strcmp(tmp->name, name) == 0){
                 tmp->quantity += quantity;
                 break;
             }
@@ -216,13 +216,14 @@ void enqueue(queue *customerQueue, Product *&head, char *name, char *productName
         }
         productSold = productSold->next;
     }
+
     if(productSold->next == NULL){
         printf("Product %s is not in storage.\n", name);
         return;
     }
 
     //Update product sold in storage
-    if(productSold->quantity > productQuantity){
+    if(productSold->quantity < productQuantity){
         printf("The item is not enough products to sell.");
     }
     else{
@@ -234,23 +235,56 @@ void enqueue(queue *customerQueue, Product *&head, char *name, char *productName
     }
 
     //Create a new customer
-    Customer *tmp = makeCustomer(name, productName, productQuantity);
+    Customer *newCustomer = makeCustomer(name, productName, productQuantity);
 
     //
     if(customerQueue->front == NULL){
-        customerQueue->front = customerQueue->back = tmp;
+        customerQueue->front = customerQueue->back = newCustomer;
     }
     else{
-        tmp->next = customerQueue->back;
-        customerQueue->back = tmp;
+        customerQueue->back->next = newCustomer;
+        customerQueue->back = newCustomer;
     }
     customerQueue->size++;
 }
 
-// void dequeue(queue *customerQueue, )
+void dequeue(queue *customerQueue){
+    if(customerQueue->front == NULL){
+        printf("The queue is empty.\n");
+        return;
+    }
+
+    Customer *tmp = customerQueue->front;
+    customerQueue->front = customerQueue->front->next;
+
+    if(customerQueue->front == NULL){
+        customerQueue->back = NULL;
+    }
+
+    free(tmp->name);
+    free(tmp->productName);
+    free(tmp);
+    customerQueue->size--;
+}
 
 int main(){
+    // Product *head = NULL;
+    // queue *customerQueue = NULL;
+    // init(customerQueue);
+
     Product *head = NULL;
-    queue *customerQueue = NULL;
-    init(customerQueue);
+    queue customerQueue;
+    init(&customerQueue);
+
+    // Example usage
+    addProduct(head, "Apple", 10, 5);
+    addProduct(head, "Banana", 20, 2);
+
+    enqueue(&customerQueue, head, "John Doe", "Apple", 5);
+    enqueue(&customerQueue, head, "Jane Doe", "Banana", 15);
+
+    dequeue(&customerQueue);
+    dequeue(&customerQueue);
+
+    return 0;
 }
