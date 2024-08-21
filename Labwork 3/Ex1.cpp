@@ -20,6 +20,7 @@ Product *makeProduct(char *name, int quantity, int price){
     return newProduct;
 }
 
+//them vao cuoi ds
 void addProduct(Product *&head, char *name, int quantity, int price){
     Product *newProduct = makeProduct(name, quantity, price);
 
@@ -87,8 +88,8 @@ void removeProduct(Product *&head, char *name){
         if (head != NULL) {
             head->prev = NULL;
         }
-        free(prod_remove->name);  // Giải phóng bộ nhớ của tên
-        free(prod_remove);        // Giải phóng bộ nhớ của nút
+        free(prod_remove->name);
+        free(prod_remove);
         printf("Product %s removed from the beginning.\n", name);
         return;
     }
@@ -119,8 +120,8 @@ void removeProduct(Product *&head, char *name){
         printf("Product %s removed from the end.\n", name);
     }
 
-    free(prod_remove->name);  // Giải phóng bộ nhớ của tên
-    free(prod_remove);        // Giải phóng bộ nhớ của nút
+    free(prod_remove->name);
+    free(prod_remove);
 }
 
 // int validProductName(Product *head, char *name){

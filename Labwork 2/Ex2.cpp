@@ -156,7 +156,7 @@ int main(){
             printf("The number of passenger(s): ");
             int passenger; scanf("%d", &passenger);
             printf("ID of car: ");
-            char *id =(char *)malloc(sizeof(char));
+            char *id = (char *)malloc(sizeof(char));
             scanf("%s", id);
             addCar(head, maximumCapacity, passenger, id);
         }
