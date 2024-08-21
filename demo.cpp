@@ -109,17 +109,17 @@ void displayProducts(Product *head) {
     }
 }
 
-int getProductQuantity(Product *head, char *name) {
-    Product *tmp = head;
+// int getProductQuantity(Product *head, char *name) {
+//     Product *tmp = head;
 
-    while (tmp != NULL) {
-        if (strcmp(tmp->name, name) == 0) {
-            return tmp->quantity;
-        }
-        tmp = tmp->next;
-    }
-    return 0;
-}
+//     while (tmp != NULL) {
+//         if (strcmp(tmp->name, name) == 0) {
+//             return tmp->quantity;
+//         }
+//         tmp = tmp->next;
+//     }
+//     return 0;
+// }
 
 void resizeStorage(Product *&head, char *name, int quantity, int price) {
     Product *tmp = head;
