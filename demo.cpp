@@ -26,7 +26,7 @@ typedef struct queue {
 
 Product *makeProduct(char *name, int quantity, int price) {
     Product *newProduct = (Product *)malloc(sizeof(Product));
-    newProduct->name = strdup(name);
+    newProduct->name = name;
     newProduct->quantity = quantity;
     newProduct->price = price;
     newProduct->next = newProduct->prev = NULL;
@@ -136,7 +136,7 @@ void resizeStorage(Product *&head, char *name, int quantity, int price) {
 
 Customer *makeCustomer(char *name) {
     Customer *newCustomer = (Customer *)malloc(sizeof(Customer));
-    newCustomer->name = strdup(name);
+    newCustomer->name = name;
     newCustomer->productName = NULL;
     newCustomer->productQuantity = 0;
     newCustomer->totalPrice = 0;
@@ -261,7 +261,7 @@ void buyProduct(queue *customerQueue, Product *&head) {
         else {
             productSold->quantity -= quantity;
             if (currentCustomer->productName == NULL) {
-                currentCustomer->productName = strdup(productName);
+                currentCustomer->productName = productName;
             } 
             else {
                 char *newProductName = (char *)malloc(strlen(currentCustomer->productName) + strlen(productName) + 3);
