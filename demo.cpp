@@ -87,7 +87,8 @@ void removeProduct(Product *&head, char *name) {
     if (prod_remove->next != NULL) {
         prod_remove->next->prev = tmp;
         printf("Product %s removed from the middle.\n", name);
-    } else {
+    } 
+    else {
         printf("Product %s removed from the end.\n", name);
     }
 
@@ -152,7 +153,8 @@ void init(queue *customerQueue) {
 void enqueue(queue *customerQueue, Customer *newCustomer) {
     if (customerQueue->back == NULL) {
         customerQueue->front = customerQueue->back = newCustomer;
-    } else {
+    } 
+    else {
         customerQueue->back->next = newCustomer;
         customerQueue->back = newCustomer;
     }
@@ -188,7 +190,8 @@ void dequeue(queue *customerQueue) {
 //     printf("Customer Name: %s\n", customer->name);
 //     if (customer->productName != NULL) {
 //         printf("Bought Product: %s, Quantity: %d, Total Price: %d\n", customer->productName, customer->productQuantity, customer->totalPrice);
-//     } else {
+//     } 
+//     else {
 //         printf("Customer didn't buy anything.\n");
 //     }
 //     printf("------------------------\n");
