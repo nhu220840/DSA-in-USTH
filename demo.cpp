@@ -26,7 +26,7 @@ typedef struct queue {
 
 Product *makeProduct(char *name, int quantity, int price) {
     Product *newProduct = (Product *)malloc(sizeof(Product));
-    newProduct->name = name;
+    newProduct->name = strdup(name);
     newProduct->quantity = quantity;
     newProduct->price = price;
     newProduct->next = newProduct->prev = NULL;
@@ -66,7 +66,7 @@ void removeProduct(Product *&head, char *name) {
         }
         free(prod_remove->name);
         free(prod_remove);
-        printf("Product %s removed from the beginning.\n", name);
+        printf("Product %s is removed.\n", name);
         return;
     }
 
@@ -86,10 +86,10 @@ void removeProduct(Product *&head, char *name) {
     tmp->next = prod_remove->next;
     if (prod_remove->next != NULL) {
         prod_remove->next->prev = tmp;
-        printf("Product %s removed from the middle.\n", name);
+        printf("Product %s is removed.\n", name);
     } 
     else {
-        printf("Product %s removed from the end.\n", name);
+        printf("Product %s is removed.\n", name);
     }
 
     free(prod_remove->name);
@@ -102,6 +102,7 @@ void displayProducts(Product *head) {
         return;
     }
 
+    printf("All product in the storage:\n");
     Product *tmp = head;
     while (tmp != NULL) {
         printf("Product Name: %s, Quantity: %d, Price: %d\n", tmp->name, tmp->quantity, tmp->price);
@@ -121,22 +122,53 @@ void displayProducts(Product *head) {
 //     return 0;
 // }
 
-void resizeStorage(Product *&head, char *name, int quantity, int price) {
+// void resizeStorage(Product *&head, char *name, int quantity, int price) {
+//     Product *tmp = head;
+//     while (tmp != NULL) {
+//         if (strcmp(tmp->name, name) == 0) {
+//             tmp->quantity += quantity;
+//             return;
+//         }
+//         tmp = tmp->next;
+//     }
+
+//     addProduct(head, name, quantity, price);
+// }
+
+int getProductQuantity(Product *head, char *name){
     Product *tmp = head;
-    while (tmp != NULL) {
-        if (strcmp(tmp->name, name) == 0) {
-            tmp->quantity += quantity;
-            return;
+
+    while(tmp != NULL){
+        if(strcmp(tmp->name, name) == 0){
+            return tmp->quantity;
         }
         tmp = tmp->next;
     }
+    return 0;
+}
 
-    addProduct(head, name, quantity, price);
+void editProductInfo(Product *&head, char *name, int quantity, int price){
+    //The product is already in the stock, add more quantity
+    if(getProductQuantity(head, name) != 0){
+        Product *tmp = head;
+        while(tmp != NULL){
+            if(strcmp(tmp->name, name) == 0){
+                tmp->quantity += quantity;
+                tmp->price = price;
+                break;
+            }
+            tmp = tmp->next;
+        }
+    }
+    else{
+        //Add new product if it is not in the stock
+        addProduct(head, name, quantity, price);
+    }
 }
 
 Customer *makeCustomer(char *name) {
     Customer *newCustomer = (Customer *)malloc(sizeof(Customer));
-    newCustomer->name = name;
+    newCustomer->name = strdup(name);
     newCustomer->productName = NULL;
     newCustomer->productQuantity = 0;
     newCustomer->totalPrice = 0;
@@ -261,7 +293,7 @@ void buyProduct(queue *customerQueue, Product *&head) {
         else {
             productSold->quantity -= quantity;
             if (currentCustomer->productName == NULL) {
-                currentCustomer->productName = productName;
+                currentCustomer->productName = strdup(productName);
             } 
             else {
                 char *newProductName = (char *)malloc(strlen(currentCustomer->productName) + strlen(productName) + 3);
@@ -303,8 +335,8 @@ void printMainMenu() {
 
 void printProductMenu() {
     printf("1. Add product to storage\n");
-    printf("2. Resize storage\n");
-    printf("3. Remove product from storage\n");
+    printf("2. Remove product from storage\n");
+    printf("3. Edit product in storage\n");
     printf("4. Display all products\n");
     printf("5. Back to main menu\n");
     printf("Choose an option: ");
@@ -352,21 +384,21 @@ int main() {
                             addProduct(head, productName, quantity, price);
                             break;
                         case 2:
-                            printf("Enter product name to resize: ");
-                            fgets(productName, 50, stdin);
-                            productName[strcspn(productName, "\n")] = '\0';
-                            printf("Enter new quantity: ");
-                            scanf("%d", &quantity);
-                            printf("Enter new price: ");
-                            scanf("%d", &price);
-                            getchar();
-                            resizeStorage(head, productName, quantity, price);
-                            break;
-                        case 3:
                             printf("Enter product name to remove: ");
                             fgets(productName, 50, stdin);
                             productName[strcspn(productName, "\n")] = '\0';
                             removeProduct(head, productName);
+                            break;
+                        case 3:
+                            printf("Enter product name to edit (or add more): ");
+                            fgets(productName, 50, stdin);
+                            productName[strcspn(productName, "\n")] = '\0';
+                            printf("Enter quantity you want to change (or new quantity): ");
+                            scanf("%d", &quantity);
+                            printf("Enter new price: ");
+                            scanf("%d", &price);
+                            getchar();
+                            editProductInfo(head, productName, quantity, price);
                             break;
                         case 4:
                             displayProducts(head);
@@ -392,6 +424,8 @@ int main() {
                             fgets(name, 50, stdin);
                             name[strcspn(name, "\n")] = '\0';
                             enqueue(&customerQueue, makeCustomer(name));
+                            displayProducts(head);
+                            printf("-------------------------------------\n");
                             break;
                         case 2:
                             buyProduct(&customerQueue, head);
@@ -401,7 +435,7 @@ int main() {
                         default:
                             printf("Invalid option. Please try again.\n");
                     }
-                    if (customerChoice == 4) break;
+                    if (customerChoice == 3) break;
                 }
                 break;
 
