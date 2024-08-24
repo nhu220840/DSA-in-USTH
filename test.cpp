@@ -2,284 +2,175 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Product {
-    char *name;
-    int quantity;
-    int price;
-    struct Product *next;
-    struct Product *prev;
-} Product;
+typedef struct Website{
+    char *url;
+    char *title;
+    struct Website *next;
+} Website;
 
-typedef struct Customer {
-    char *name;
-    char *productName;
-    int productQuantity;
-    struct Customer *next;
-} Customer;
-
-typedef struct queue {
-    Customer *front;
-    Customer *back;
+typedef struct Stack {
     int size;
-} queue;
+    Website *top;
+} Stack;
 
-Product *makeProduct(char *name, int quantity, int price) {
-    Product *newProduct = (Product *)malloc(sizeof(Product));
-    newProduct->name = strdup(name);
-    newProduct->quantity = quantity;
-    newProduct->price = price;
-    newProduct->next = newProduct->prev = NULL;
+Website *makeWebsite(char *url, char *title){
+    Website *newWebsite = (Website *)malloc(sizeof(Website));
+    newWebsite->url = strdup(url);
+    newWebsite->title = strdup(title);
+    newWebsite->next = NULL;
 
-    return newProduct;
+    return newWebsite;
 }
 
-// Add product to the end of the list
-void addProduct(Product *&head, char *name, int quantity, int price) {
-    Product *newProduct = makeProduct(name, quantity, price);
+Stack *makeStack(){
+    Stack *newStack = (Stack *)malloc(sizeof(Stack));
+    newStack->size = 0;
+    newStack->top = NULL;
+    
+    return newStack;
+}
 
-    if (head == NULL) {
-        head = newProduct;
+int isEmpty(Stack *st){
+    return st->size == 0;
+}
+
+void push(Stack *st, char *url, char *title){
+    Website *newWeb = makeWebsite(url, title);
+    newWeb->next = st->top;
+    st->top = newWeb;
+    st->size++;
+}
+
+void pop(Stack *st){
+    if(isEmpty(st)){
+        printf("Stack is empty, cannot pop.\n");
         return;
     }
-
-    Product *tmp = head;
-    while (tmp->next != NULL) {
-        tmp = tmp->next;
-    }
-    tmp->next = newProduct;
-    newProduct->prev = tmp;
-}
-
-void removeProduct(Product *&head, char *name) {
-    if (head == NULL) {
-        printf("List is empty.\n");
-        return;
-    }
-
-    Product *tmp = head;
-
-    // Remove from the beginning
-    if (strcmp(head->name, name) == 0) {
-        Product *prod_remove = head;
-        head = head->next;
-        if (head != NULL) {
-            head->prev = NULL;
-        }
-        free(prod_remove->name);
-        free(prod_remove);
-        printf("Product %s removed from the beginning.\n", name);
-        return;
-    }
-
-    // Traverse the list to find the product to remove
-    while (tmp->next != NULL) {
-        if (strcmp(tmp->next->name, name) == 0) {
-            break;
-        }
-        tmp = tmp->next;
-    }
-
-    // Product not found
-    if (tmp->next == NULL) {
-        printf("Product %s is not in storage.\n", name);
-        return;
-    }
-
-    // Remove from the middle or end
-    Product *prod_remove = tmp->next;
-    tmp->next = prod_remove->next;
-    if (prod_remove->next != NULL) {
-        prod_remove->next->prev = tmp;
-        printf("Product %s removed from the middle.\n", name);
-    } else {
-        printf("Product %s removed from the end.\n", name);
-    }
-
-    free(prod_remove->name);
-    free(prod_remove);
-}
-
-int getProductQuantity(Product *head, char *name) {
-    Product *tmp = head;
-
-    while (tmp != NULL) {
-        if (strcmp(tmp->name, name) == 0) {
-            return tmp->quantity;
-        }
-        tmp = tmp->next;
-    }
-    return 0;
-}
-
-void resizeStorage(Product *&head, char *name, int quantity, int price) {
-    // If the product is already in stock, add more quantity
-    Product *tmp = head;
-    while (tmp != NULL) {
-        if (strcmp(tmp->name, name) == 0) {
-            tmp->quantity += quantity;
-            return;
-        }
-        tmp = tmp->next;
-    }
-
-    // Add new product if it is not in stock
-    addProduct(head, name, quantity, price);
-}
-
-Customer *makeCustomer(char *name, char *productName, int productQuantity) {
-    Customer *newCustomer = (Customer *)malloc(sizeof(Customer));
-    newCustomer->name = strdup(name);
-    newCustomer->productName = strdup(productName);
-    newCustomer->productQuantity = productQuantity;
-    newCustomer->next = NULL;
-
-    return newCustomer;
-}
-
-void init(queue *customerQueue) {
-    customerQueue->front = customerQueue->back = NULL;
-    customerQueue->size = 0;
-}
-
-void enqueue(queue *customerQueue, Product *&head, char *name, char *productName, int productQuantity) {
-    // Find the product in storage
-    Product *productSold = head;
-    while (productSold != NULL) {
-        if (strcmp(productSold->name, productName) == 0) {
-            break;
-        }
-        productSold = productSold->next;
-    }
-
-    if (productSold == NULL) {
-        printf("Product %s is not in storage.\n", productName);
-        return;
-    }
-
-    // Update product quantity in storage
-    if (productSold->quantity < productQuantity) {
-        printf("The item is not enough products to sell.\n");
-        return;
-    } else {
-        productSold->quantity -= productQuantity;
-        if (productSold->quantity == 0) {
-            removeProduct(head, productName);
-            printf("%s is out of stock.\n", productName);
-        }
-    }
-
-    // Create a new customer
-    Customer *newCustomer = makeCustomer(name, productName, productQuantity);
-
-    // Insert into the queue
-    if (customerQueue->back == NULL) {
-        customerQueue->front = customerQueue->back = newCustomer;
-    } else {
-        customerQueue->back->next = newCustomer;
-        customerQueue->back = newCustomer;
-    }
-    customerQueue->size++;
-}
-
-void dequeue(queue *customerQueue) {
-    if (customerQueue->front == NULL) {
-        printf("The queue is empty.\n");
-        return;
-    }
-
-    Customer *tmp = customerQueue->front;
-    customerQueue->front = customerQueue->front->next;
-
-    if (customerQueue->front == NULL) {
-        customerQueue->back = NULL;
-    }
-
-    free(tmp->name);
-    free(tmp->productName);
+    
+    Website *tmp = st->top;
+    st->top = st->top->next;
+    st->size--;
+    
+    free(tmp->url);
+    free(tmp->title);
     free(tmp);
-    customerQueue->size--;
 }
 
-void printCustomerInfo(queue *customerQueue) {
-    if (customerQueue->front == NULL) {
-        printf("No customers in the queue.\n");
+Website* peek(Stack *st){
+    if(isEmpty(st)){
+        return NULL;
+    }
+    return st->top;
+}
+
+void visitWebsite(Stack *backwardStack, Stack *forwardStack, char *url, char *title){
+    // Push the current website to the forward stack
+    while(!isEmpty(forwardStack)){
+        pop(forwardStack);
+    }
+    push(backwardStack, url, title);
+    printf("Visited: %s - %s\n", url, title);
+}
+
+void goBack(Stack *backwardStack, Stack *forwardStack){
+    if(isEmpty(backwardStack)){
+        printf("No previous website to go back to.\n");
         return;
     }
+    Website *current = peek(backwardStack);
+    pop(backwardStack);
+    push(forwardStack, current->url, current->title);
+}
 
-    Customer *tmp = customerQueue->front;
-    while (tmp != NULL) {
-        printf("Customer Name: %s\n", tmp->name);
-        printf("Product Name: %s\n", tmp->productName);
-        printf("Product Quantity: %d\n", tmp->productQuantity);
-        printf("------------------------\n");
-        tmp = tmp->next;
+void goForward(Stack *backwardStack, Stack *forwardStack){
+    if(isEmpty(forwardStack)){
+        printf("No forward website to go to.\n");
+        return;
     }
+    Website *current = peek(forwardStack);
+    pop(forwardStack);
+    push(backwardStack, current->url, current->title);
 }
 
-void printMenu() {
-    printf("1. Add product to storage\n");
-    printf("2. Remove product from storage\n");
-    printf("3. Sell product to customer\n");
-    printf("4. Print customer information\n");
-    printf("5. Exit\n");
-    printf("Choose an option: ");
+void displayStacks(Stack *backwardStack, Stack *forwardStack){
+    Website *current;
+
+    printf("Backward Stack:\n");
+    current = backwardStack->top;
+    while(current != NULL){
+        if(current == backwardStack->top){
+            printf("%s - %s (You are here)\n", current->url, current->title);
+        } 
+        else {
+            printf("%s - %s\n", current->url, current->title);
+        }
+        current = current->next;
+    }
+
+    printf("\nForward Stack:\n");
+    current = forwardStack->top;
+    while(current != NULL){
+        printf("%s - %s\n", current->url, current->title);
+        current = current->next;
+    }
+
+    printf("\n");
 }
 
-int main() {
-    Product *head = NULL;
-    queue customerQueue;
-    init(&customerQueue);
+int main(){
+    Stack *backwardStack = makeStack();
+    Stack *forwardStack = makeStack();
+
+    // Visit 10 websites
+    visitWebsite(backwardStack, forwardStack, "https://example0.com", "Example Site 0");
+    visitWebsite(backwardStack, forwardStack, "https://example1.com", "Example Site 1");
+    visitWebsite(backwardStack, forwardStack, "https://example2.com", "Example Site 2");
+    visitWebsite(backwardStack, forwardStack, "https://example3.com", "Example Site 3");
+    visitWebsite(backwardStack, forwardStack, "https://example4.com", "Example Site 4");
+    visitWebsite(backwardStack, forwardStack, "https://example5.com", "Example Site 5");
+    visitWebsite(backwardStack, forwardStack, "https://example6.com", "Example Site 6");
+    visitWebsite(backwardStack, forwardStack, "https://example7.com", "Example Site 7");
+    visitWebsite(backwardStack, forwardStack, "https://example8.com", "Example Site 8");
+    visitWebsite(backwardStack, forwardStack, "https://example9.com", "Example Site 9");
+
+    printf("=======================================================\n");
 
     int choice;
-    char name[50], productName[50];
-    int quantity, price;
-
-    while (1) {
-        printMenu();
+    do {
+        displayStacks(backwardStack, forwardStack);
+        
+        printf("Menu:\n");
+        printf("1. Go forward\n");
+        printf("2. Go backward\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
         scanf("%d", &choice);
-        getchar(); // To consume newline character
 
-        switch (choice) {
+        switch(choice) {
             case 1:
-                printf("Enter product name: ");
-                fgets(productName, 50, stdin);
-                productName[strcspn(productName, "\n")] = '\0'; // Remove newline character
-                printf("Enter quantity: ");
-                scanf("%d", &quantity);
-                printf("Enter price: ");
-                scanf("%d", &price);
-                resizeStorage(head, productName, quantity, price);
+                goForward(backwardStack, forwardStack);
                 break;
-
             case 2:
-                printf("Enter product name to remove: ");
-                fgets(productName, 50, stdin);
-                productName[strcspn(productName, "\n")] = '\0';
-                removeProduct(head, productName);
+                goBack(backwardStack, forwardStack);
                 break;
-
             case 3:
-                printf("Enter customer name: ");
-                fgets(name, 50, stdin);
-                name[strcspn(name, "\n")] = '\0';
-                printf("Enter product name: ");
-                fgets(productName, 50, stdin);
-                productName[strcspn(productName, "\n")] = '\0';
-                printf("Enter quantity: ");
-                scanf("%d", &quantity);
-                enqueue(&customerQueue, head, name, productName, quantity);
-                break;
-
-            case 4:
-                printCustomerInfo(&customerQueue);
-                break;
-
-            case 5:
                 printf("Exiting...\n");
-                return 0;
-
+                break;
             default:
-                printf("Invalid option. Please try again.\n");
+                printf("Invalid choice. Please try again.\n");
+                break;
         }
+    } while(choice != 3);
+
+    while(!isEmpty(backwardStack)){
+        pop(backwardStack);
     }
+    while(!isEmpty(forwardStack)){
+        pop(forwardStack);
+    }
+
+    free(backwardStack);
+    free(forwardStack);
+
+    return 0;
 }
