@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct{
+typedef struct UnboundedInt{
     int *digits;
     int size;
     int sign;

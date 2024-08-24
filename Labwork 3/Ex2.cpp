@@ -15,22 +15,15 @@ typedef struct Stack{
 
 Website *makeWebsite(char *url, char *title){
     Website *newWebsite = (Website *)malloc(sizeof(Website));
-    if(!newWebsite){
-        perror("Failed to allocate memory for new website");
-        exit(EXIT_FAILURE);
-    }
     newWebsite->url = strdup(url);
     newWebsite->title = strdup(title);
     newWebsite->next = NULL;
+
     return newWebsite;
 }
 
 Stack *makeStack(){
     Stack *newStack = (Stack *)malloc(sizeof(Stack));
-    if(!newStack){
-        perror("Failed to allocate memory for new stack");
-        exit(EXIT_FAILURE);
-    }
     newStack->size = 0;
     newStack->top = NULL;
 
@@ -107,7 +100,7 @@ void displayStacks(Stack *backwardStack, Stack *forwardStack, Website *current){
         temp = temp->next;
     }
 
-    if (current != NULL){
+    if(current != NULL){
         printf("\nCurrent Website:\n");
         printf("%s - %s (You are here)\n", current->url, current->title);
     } 
@@ -139,7 +132,6 @@ int main(){
     visitWebsite(backwardStack, forwardStack, &current, "https://example7.com", "Example Website 7");
     visitWebsite(backwardStack, forwardStack, &current, "https://example8.com", "Example Website 8");
 
-
     int choice;
     char url[256];
     char title[256];
@@ -148,39 +140,39 @@ int main(){
         displayStacks(backwardStack, forwardStack, current);
 
         printf("Menu:\n");
-        printf("1. Visit new website\n");
-        printf("2. Go back\n");
-        printf("3. Go forward\n");
-        printf("4. Exit\n");
+        // printf("1. Visit new website\n");
+        printf("1. Go back\n");
+        printf("2. Go forward\n");
+        printf("3. Exit\n");
         printf("Enter your choice: ");
         if(scanf("%d", &choice) != 1){
-            printf("Invalid input. Please enter a number between 1 and 4.\n");
+            printf("Invalid input. Please enter a number between 1 and 3.\n");
             while (getchar() != '\n');
             continue;
         }
 
         switch(choice){
+            // case 1:
+            //     printf("Enter URL: ");
+            //     scanf("%s", url);
+            //     printf("Enter Title: ");
+            //     scanf(" %[^\n]", title);
+            //     visitWebsite(backwardStack, forwardStack, &current, url, title);
+            //     break;
             case 1:
-                printf("Enter URL: ");
-                scanf("%s", url);
-                printf("Enter Title: ");
-                scanf(" %[^\n]", title);
-                visitWebsite(backwardStack, forwardStack, &current, url, title);
-                break;
-            case 2:
                 goBack(backwardStack, forwardStack, &current);
                 break;
-            case 3:
+            case 2:
                 goForward(backwardStack, forwardStack, &current);
                 break;
-            case 4:
+            case 3:
                 printf("Exiting...\nGood bye !!!\n");
                 break;
             default:
                 printf("Invalid choice. Please try again!!!\n");
                 break;
         }
-		if(choice == 4) break;
+		if(choice == 3) break;
     }
 
     if(current != NULL){

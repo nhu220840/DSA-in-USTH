@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Website{
+typedef struct Website {
     char *url;
     char *title;
     struct Website *next;
@@ -13,67 +13,78 @@ typedef struct Stack {
     Website *top;
 } Stack;
 
-Website *makeWebsite(char *url, char *title){
+Website *makeWebsite(char *url, char *title) {
     Website *newWebsite = (Website *)malloc(sizeof(Website));
+    if (newWebsite == NULL) {
+        printf("Memory allocation failed for newWebsite.\n");
+        exit(1);
+    }
     newWebsite->url = strdup(url);
     newWebsite->title = strdup(title);
+    if (newWebsite->url == NULL || newWebsite->title == NULL) {
+        printf("Memory allocation failed for url or title.\n");
+        exit(1);
+    }
     newWebsite->next = NULL;
-
     return newWebsite;
 }
 
-Stack *makeStack(){
+Stack *makeStack() {
     Stack *newStack = (Stack *)malloc(sizeof(Stack));
+    if (newStack == NULL) {
+        printf("Memory allocation failed for newStack.\n");
+        exit(1);
+    }
     newStack->size = 0;
     newStack->top = NULL;
-    
     return newStack;
 }
 
-int isEmpty(Stack *st){
+int isEmpty(Stack *st) {
     return st->size == 0;
 }
 
-void push(Stack *st, char *url, char *title){
+void push(Stack *st, char *url, char *title) {
     Website *newWeb = makeWebsite(url, title);
     newWeb->next = st->top;
     st->top = newWeb;
     st->size++;
 }
 
-void pop(Stack *st){
-    if(isEmpty(st)){
+void pop(Stack *st) {
+    if (isEmpty(st)) {
         printf("Stack is empty, cannot pop.\n");
         return;
     }
-    
+
     Website *tmp = st->top;
     st->top = st->top->next;
     st->size--;
-    
+
     free(tmp->url);
     free(tmp->title);
     free(tmp);
 }
 
-Website* peek(Stack *st){
-    if(isEmpty(st)){
+Website* peek(Stack *st) {
+    if (isEmpty(st)) {
         return NULL;
     }
     return st->top;
 }
 
-void visitWebsite(Stack *backwardStack, Stack *forwardStack, char *url, char *title){
-    // Push the current website to the forward stack
-    while(!isEmpty(forwardStack)){
+void visitWebsite(Stack *backwardStack, Stack *forwardStack, char *url, char *title) {
+    // Clear the forward stack
+    while (!isEmpty(forwardStack)) {
         pop(forwardStack);
     }
+    // Push the new website to the backward stack
     push(backwardStack, url, title);
     printf("Visited: %s - %s\n", url, title);
 }
 
-void goBack(Stack *backwardStack, Stack *forwardStack){
-    if(isEmpty(backwardStack)){
+void goBack(Stack *backwardStack, Stack *forwardStack) {
+    if (isEmpty(backwardStack)) {
         printf("No previous website to go back to.\n");
         return;
     }
@@ -82,8 +93,8 @@ void goBack(Stack *backwardStack, Stack *forwardStack){
     push(forwardStack, current->url, current->title);
 }
 
-void goForward(Stack *backwardStack, Stack *forwardStack){
-    if(isEmpty(forwardStack)){
+void goForward(Stack *backwardStack, Stack *forwardStack) {
+    if (isEmpty(forwardStack)) {
         printf("No forward website to go to.\n");
         return;
     }
@@ -92,16 +103,15 @@ void goForward(Stack *backwardStack, Stack *forwardStack){
     push(backwardStack, current->url, current->title);
 }
 
-void displayStacks(Stack *backwardStack, Stack *forwardStack){
+void displayStacks(Stack *backwardStack, Stack *forwardStack) {
     Website *current;
 
     printf("Backward Stack:\n");
     current = backwardStack->top;
-    while(current != NULL){
-        if(current == backwardStack->top){
+    while (current != NULL) {
+        if (current == peek(backwardStack)) {
             printf("%s - %s (You are here)\n", current->url, current->title);
-        } 
-        else {
+        } else {
             printf("%s - %s\n", current->url, current->title);
         }
         current = current->next;
@@ -109,7 +119,7 @@ void displayStacks(Stack *backwardStack, Stack *forwardStack){
 
     printf("\nForward Stack:\n");
     current = forwardStack->top;
-    while(current != NULL){
+    while (current != NULL) {
         printf("%s - %s\n", current->url, current->title);
         current = current->next;
     }
@@ -117,7 +127,7 @@ void displayStacks(Stack *backwardStack, Stack *forwardStack){
     printf("\n");
 }
 
-int main(){
+int main() {
     Stack *backwardStack = makeStack();
     Stack *forwardStack = makeStack();
 
@@ -126,12 +136,12 @@ int main(){
     visitWebsite(backwardStack, forwardStack, "https://example1.com", "Example Site 1");
     visitWebsite(backwardStack, forwardStack, "https://example2.com", "Example Site 2");
     visitWebsite(backwardStack, forwardStack, "https://example3.com", "Example Site 3");
-    // visitWebsite(backwardStack, forwardStack, "https://example4.com", "Example Site 4");
-    // visitWebsite(backwardStack, forwardStack, "https://example5.com", "Example Site 5");
-    // visitWebsite(backwardStack, forwardStack, "https://example6.com", "Example Site 6");
-    // visitWebsite(backwardStack, forwardStack, "https://example7.com", "Example Site 7");
-    // visitWebsite(backwardStack, forwardStack, "https://example8.com", "Example Site 8");
-    // visitWebsite(backwardStack, forwardStack, "https://example9.com", "Example Site 9");
+    visitWebsite(backwardStack, forwardStack, "https://example4.com", "Example Site 4");
+    visitWebsite(backwardStack, forwardStack, "https://example5.com", "Example Site 5");
+    visitWebsite(backwardStack, forwardStack, "https://example6.com", "Example Site 6");
+    visitWebsite(backwardStack, forwardStack, "https://example7.com", "Example Site 7");
+    visitWebsite(backwardStack, forwardStack, "https://example8.com", "Example Site 8");
+    visitWebsite(backwardStack, forwardStack, "https://example9.com", "Example Site 9");
 
     printf("=======================================================\n");
 
@@ -146,7 +156,7 @@ int main(){
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch(choice) {
+        switch (choice) {
             case 1:
                 goForward(backwardStack, forwardStack);
                 break;
@@ -160,12 +170,13 @@ int main(){
                 printf("Invalid choice. Please try again.\n");
                 break;
         }
-    } while(choice != 3);
+    } while (choice != 3);
 
-    while(!isEmpty(backwardStack)){
+    // Clean up stacks
+    while (!isEmpty(backwardStack)) {
         pop(backwardStack);
     }
-    while(!isEmpty(forwardStack)){
+    while (!isEmpty(forwardStack)) {
         pop(forwardStack);
     }
 
