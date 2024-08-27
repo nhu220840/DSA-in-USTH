@@ -64,7 +64,7 @@ void visitWebsite(Stack *backwardStack, Stack *forwardStack, Website **current, 
     if(*current != NULL){
         push(backwardStack, *current);
     }
-    clearStack(forwardStack);
+    // clearStack(forwardStack);
     *current = makeWebsite(url, title);
     printf("Visited: %s - %s\n", url, title);
 }
@@ -133,17 +133,17 @@ int main(){
     visitWebsite(backwardStack, forwardStack, &current, "https://example8.com", "Example Website 8");
 
     int choice;
-    char url[256];
-    char title[256];
+    char url[100];
+    char title[100];
 
     while(1){
         displayStacks(backwardStack, forwardStack, current);
 
         printf("Menu:\n");
-        // printf("1. Visit new website\n");
-        printf("1. Go back\n");
-        printf("2. Go forward\n");
-        printf("3. Exit\n");
+        printf("1. Visit a new website\n");
+        printf("2. Go back\n");
+        printf("3. Go forward\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         if(scanf("%d", &choice) != 1){
             printf("Invalid input. Please enter a number between 1 and 3.\n");
@@ -152,27 +152,27 @@ int main(){
         }
 
         switch(choice){
-            // case 1:
-            //     printf("Enter URL: ");
-            //     scanf("%s", url);
-            //     printf("Enter Title: ");
-            //     scanf(" %[^\n]", title);
-            //     visitWebsite(backwardStack, forwardStack, &current, url, title);
-            //     break;
             case 1:
-                goBack(backwardStack, forwardStack, &current);
+                printf("Enter URL: ");
+                scanf("%s", url);
+                printf("Enter Title: ");
+                scanf("%s", title);
+                visitWebsite(backwardStack, forwardStack, &current, url, title);
                 break;
             case 2:
-                goForward(backwardStack, forwardStack, &current);
+                goBack(backwardStack, forwardStack, &current);
                 break;
             case 3:
+                goForward(backwardStack, forwardStack, &current);
+                break;
+            case 4:
                 printf("Exiting...\nGood bye !!!\n");
                 break;
             default:
                 printf("Invalid choice. Please try again!!!\n");
                 break;
         }
-		if(choice == 3) break;
+		if(choice == 4) break;
     }
 
     if(current != NULL){
