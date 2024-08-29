@@ -201,8 +201,7 @@ void buyProduct(queue *customerQueue, Product *&head){
 
         printf("Enter product name: ");
         char productName[50];
-        fgets(productName, 50, stdin);
-        productName[strcspn(productName, "\n")] = '\0';
+        gets(productName);
 
         Product *productSold = head;
         while(productSold != NULL){
@@ -320,8 +319,6 @@ int main(){
                     switch(productChoice){
                         case 1:
                             printf("Enter product name: ");
-                            // fgets(productName, 50, stdin);
-                            // productName[strcspn(productName, "\n")] = '\0';
                             gets(productName);
                             printf("Enter quantity: ");
                             scanf("%d", &quantity);
@@ -332,15 +329,11 @@ int main(){
                             break;
                         case 2:
                             printf("Enter product name to remove: ");
-                            // fgets(productName, 50, stdin);
-                            // productName[strcspn(productName, "\n")] = '\0';
                             gets(productName);
                             removeProduct(head, productName);
                             break;
                         case 3:
                             printf("Enter product name to edit (or add more): ");
-                            // fgets(productName, 50, stdin);
-                            // productName[strcspn(productName, "\n")] = '\0';
                             gets(productName);
                             printf("Enter quantity you want to change (or new quantity): ");
                             scanf("%d", &quantity);
@@ -370,8 +363,6 @@ int main(){
                     switch(customerChoice){
                         case 1:
                             printf("Enter customer name: ");
-                            // fgets(name, 50, stdin);
-                            // name[strcspn(name, "\n")] = '\0';
                             gets(name);
                             enqueue(&customerQueue, makeCustomer(name));
                             displayProducts(head);
