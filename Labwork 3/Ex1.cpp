@@ -320,8 +320,9 @@ int main(){
                     switch(productChoice){
                         case 1:
                             printf("Enter product name: ");
-                            fgets(productName, 50, stdin);
-                            productName[strcspn(productName, "\n")] = '\0';
+                            // fgets(productName, 50, stdin);
+                            // productName[strcspn(productName, "\n")] = '\0';
+                            gets(productName);
                             printf("Enter quantity: ");
                             scanf("%d", &quantity);
                             printf("Enter price: ");
@@ -331,14 +332,16 @@ int main(){
                             break;
                         case 2:
                             printf("Enter product name to remove: ");
-                            fgets(productName, 50, stdin);
-                            productName[strcspn(productName, "\n")] = '\0';
+                            // fgets(productName, 50, stdin);
+                            // productName[strcspn(productName, "\n")] = '\0';
+                            gets(productName);
                             removeProduct(head, productName);
                             break;
                         case 3:
                             printf("Enter product name to edit (or add more): ");
-                            fgets(productName, 50, stdin);
-                            productName[strcspn(productName, "\n")] = '\0';
+                            // fgets(productName, 50, stdin);
+                            // productName[strcspn(productName, "\n")] = '\0';
+                            gets(productName);
                             printf("Enter quantity you want to change (or new quantity): ");
                             scanf("%d", &quantity);
                             printf("Enter new price: ");
@@ -367,8 +370,9 @@ int main(){
                     switch(customerChoice){
                         case 1:
                             printf("Enter customer name: ");
-                            fgets(name, 50, stdin);
-                            name[strcspn(name, "\n")] = '\0';
+                            // fgets(name, 50, stdin);
+                            // name[strcspn(name, "\n")] = '\0';
+                            gets(name);
                             enqueue(&customerQueue, makeCustomer(name));
                             displayProducts(head);
                             printf("-------------------------------------\n");
@@ -386,7 +390,7 @@ int main(){
                 break;
 
             case 3:
-                printf("Exiting the program...\n");
+                printf("Exiting the program...\nGood bye!!!");
                 exit(0);
             default:
                 printf("Invalid option. Please try again.\n");
