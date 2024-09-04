@@ -1,14 +1,14 @@
 #include <stdio.h>
 
 typedef struct complexNumber{
-    int real, vir;
+    int real, img;
 
     void enter(){
-        scanf("%d %d", &real, &vir);
+        scanf("%d %d", &real, &img);
     }
 
     void print(){
-        printf("%d + %di\n", real, vir);
+        printf("%d + %di\n", real, img);
     }
 } complexNumber;
 
@@ -19,7 +19,7 @@ typedef struct complexNumber{
 complexNumber addition(complexNumber a, complexNumber b){
     complexNumber res;
     res.real = a.real + b.real;
-    res.vir = a.vir + b.vir;
+    res.img = a.img + b.img;
     return res;
 }
 
@@ -30,8 +30,8 @@ complexNumber addition(complexNumber a, complexNumber b){
 //      = (x1.x2 - y1.y2) + (x1y2 + x2y1)i
 complexNumber multiplication(complexNumber a, complexNumber b){
     complexNumber res;
-    res.real = a.real * b.real - a.vir * b.vir;
-    res.vir = (a.real * b.vir + a.vir * b.real);
+    res.real = a.real * b.real - a.img * b.img;
+    res.img = (a.real * b.img + a.img * b.real);
     return res;
 }
 
