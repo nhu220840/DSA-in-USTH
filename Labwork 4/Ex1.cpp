@@ -17,9 +17,8 @@
 // END
 
 // Complextity:
-// T(n) = 1 + 1 + n + n + 1 = 2n + 3
-// T(n) = O(n)
-
+// T(n) = 1 + 1 + logn + logn + 1 = 2logn + 3
+// T(n) = O(logn)
 
 
 int main(){
