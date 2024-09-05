@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct UnboundedInt{
+typedef struct unboundedInt{
     int *digits;
     int size;
     int sign;
-} UnboundedInt;
+} unboundedInt;
 
-UnboundedInt* createUnboundedInt(int sign){
-    UnboundedInt *num = (UnboundedInt *)malloc(sizeof(UnboundedInt));
+unboundedInt* createUnboundedInt(int sign){
+    unboundedInt *num = (unboundedInt *)malloc(sizeof(unboundedInt));
     num->size = 0;
     num->digits = NULL;
     num->sign = sign;
     return num;
 }
 
-void addDigit(UnboundedInt *num, int digit, int pos){
+void addDigit(unboundedInt *num, int digit, int pos){
     if(pos < 0 || pos > num->size + 1){
         printf("Invalid position!\n");
         return;
@@ -31,7 +31,7 @@ void addDigit(UnboundedInt *num, int digit, int pos){
     num->digits[pos - 1] = digit;
 }
 
-void removeDigit(UnboundedInt *num, int pos){
+void removeDigit(unboundedInt *num, int pos){
     if (pos < 0 || pos > num->size){
         printf("Invalid position!\n");
         return;
@@ -45,7 +45,7 @@ void removeDigit(UnboundedInt *num, int pos){
     num->digits = (int *)realloc(num->digits, num->size * sizeof(int));
 }
 
-int sumDigits(UnboundedInt *num){
+int sumDigits(unboundedInt *num){
     int sum = 0;
     for(int i = 0; i < num->size; i++){
         sum += num->digits[i];
@@ -53,7 +53,7 @@ int sumDigits(UnboundedInt *num){
     return sum;
 }
 
-void display(UnboundedInt *num){
+void display(unboundedInt *num){
     if(num->sign == -1) printf("-");
     for(int i = 0; i < num->size; i++){
         printf("%d", num->digits[i]);
@@ -62,7 +62,7 @@ void display(UnboundedInt *num){
 }
 
 int main(){
-    UnboundedInt *num = NULL;
+    unboundedInt *num = NULL;
     printf("Init the sign of unbounded integer (1 is positive and -1 is negative): ");
     int sign; scanf("%d", &sign);
     num = createUnboundedInt(sign);
