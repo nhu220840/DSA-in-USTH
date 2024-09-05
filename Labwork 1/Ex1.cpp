@@ -6,7 +6,7 @@
 // Output: an integer after swapping the first and last digits
 
 // Process:
-// BEIGN
+// BEGIN
 //     Get num (char array)
 //     Set n <- length of num
 //     swap(num[0], num[n - 1])
