@@ -15,6 +15,10 @@ struct complexNumber{
     }
 };
 
+//Addition:
+//a = x1 + y1i
+//b = x2 + y2i
+//a + b = (x1 + x2) + (y1 + y2)i
 complexNumber add(complexNumber a, complexNumber b){
     complexNumber res;
     res.real = a.real + b.real;
@@ -23,6 +27,11 @@ complexNumber add(complexNumber a, complexNumber b){
     return res;
 }
 
+//Multiplication:
+//a = x1 + y1i
+//b = x2 + y2i
+//a * b = (x1.x2) + x1y2i + x2y1i - y1y2
+//      = (x1.x2 - y1.y2) + (x1y2 + x2y1)i
 complexNumber multiply(complexNumber a, complexNumber b){
     complexNumber res;
     res.real = a.real * b.real - a.imaginary * b.imaginary;
