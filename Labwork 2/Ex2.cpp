@@ -40,7 +40,7 @@ void addCar(railroad *&head, int maximumCapacity, int passenger, char *id /*, in
     //     return;
     // }
     
-    railroad *newCar = makeNewCar(maximumCapacity ,passenger, id);
+    railroad *newCar = makeNewCar(maximumCapacity, passenger, id);
     if(newCar->maximumCapacity < newCar->numberOfPassengers){
         printf("The car is overloaded!!!\n");
         printf("Cannot add to the railroad!!!\n");
