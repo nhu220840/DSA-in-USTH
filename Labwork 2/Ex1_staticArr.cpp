@@ -8,16 +8,18 @@
 using namespace std;
 using ll = long long;
 
+const int MAX_DIGIT = 1000;
+
 struct unboundedInt{
     int size;
-    int digit[100];
+    int digit[MAX_DIGIT];
 };
 
 unboundedInt* init(unboundedInt *num, int sign){
     num = new unboundedInt();
     num->digit[0] = sign;
 
-    for(int i = 1; i < 100; i++){
+    for(int i = 1; i < MAX_DIGIT; i++){
         num->digit[i] = -1;
     }
 
@@ -62,7 +64,7 @@ void display(unboundedInt *num){
     if(num->digit[0] == -1){
         cout << "-";
     }
-    for(int i = 1; i < 100; i++){
+    for(int i = 1; i < MAX_DIGIT; i++){
         if(num->digit[i] != -1)
             cout << num->digit[i];
     }
