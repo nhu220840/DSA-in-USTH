@@ -34,12 +34,12 @@ Stack* init(Stack *st){
     return st;
 }
 
-int isEmpty(Stack *st){
-    return st->top < 0; 
+int isEmpty(Stack st){
+    return st.top < 0; 
 }
 
-int size(Stack *st){
-    return st->top + 1;
+int size(Stack st){
+    return st.top + 1;
 }
 
 void push(Stack *st, Website newWeb){
@@ -53,7 +53,7 @@ void push(Stack *st, Website newWeb){
 }
 
 void pop(Stack *st){
-    if(isEmpty(st)){
+    if(isEmpty(*st)){
         cout << "Stack empty!!!" << endl;
     }
     else{
@@ -61,7 +61,15 @@ void pop(Stack *st){
     }
 }
 
-void visitWebsite(Stack )
+void clearStack(Stack *st){
+    while(!isEmpty(*st)){
+        pop(st);
+    }
+}
+
+void visitWebsite(Stack *back){
+
+}
 
 int main(){
     

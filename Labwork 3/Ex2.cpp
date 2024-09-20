@@ -69,7 +69,7 @@ void visitWebsite(Stack *backwardStack, Stack *forwardStack, Website **current, 
     printf("Visited: %s - %s\n", url, title);
 }
 
-void goBack(Stack *backwardStack, Stack *forwardStack, Website **current){
+void goBackward(Stack *backwardStack, Stack *forwardStack, Website **current){
     if(isEmpty(backwardStack)){
         printf("No previous website to go back to.\n");
         return;
@@ -160,7 +160,7 @@ int main(){
                 visitWebsite(backwardStack, forwardStack, &current, url, title);
                 break;
             case 2:
-                goBack(backwardStack, forwardStack, &current);
+                goBackward(backwardStack, forwardStack, &current);
                 break;
             case 3:
                 goForward(backwardStack, forwardStack, &current);
