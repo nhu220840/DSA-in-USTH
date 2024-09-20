@@ -67,8 +67,8 @@ void clearStack(Stack *st){
     }
 }
 
-void visitWebsite(Stack *back){
-
+void visitWebsite(Stack *backward, Stack *forward, Website current){
+    
 }
 
 int main(){

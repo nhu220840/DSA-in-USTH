@@ -1,3 +1,8 @@
+/*
+    AUTHOR: Do Nguyen Gia Nhu
+    ID: 22BA13248
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
