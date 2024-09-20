@@ -64,7 +64,7 @@ void visitWebsite(Stack *backwardStack, Stack *forwardStack, Website **current, 
     if(*current != NULL){
         push(backwardStack, *current);
     }
-    // clearStack(forwardStack);
+    clearStack(forwardStack);
     *current = makeWebsite(url, title);
     printf("Visited: %s - %s\n", url, title);
 }
@@ -141,7 +141,7 @@ int main(){
 
         printf("Menu:\n");
         printf("1. Visit a new website\n");
-        printf("2. Go back\n");
+        printf("2. Go backward\n");
         printf("3. Go forward\n");
         printf("4. Exit\n");
         printf("Enter your choice: ");
