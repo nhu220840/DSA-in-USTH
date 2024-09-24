@@ -38,8 +38,8 @@ void sieveOfEratosthenes(){
 //Complexity of sieve of Eratosthenes = O(n*log(logn))
 
 int isSphenicNumber(ll n, int i, int cnt, ll product){
-    if(cnt == 3 && n == 1) return true; //T(n) = 2
-    if(cnt > 3 || i > MAX_SIZE || n == 1) return false; //T(n) = 3
+    if(cnt == 3 && n == 1) return 1; //T(n) = 2
+    if(cnt > 3 || i > MAX_SIZE || n == 1) return 0; //T(n) = 3
     if(isPrime[i] && n % i == 0){ //T(n) = 2
         int power = 0; // T(n) = 1
         while(n % i == 0){ //T(n) = logn
@@ -47,7 +47,7 @@ int isSphenicNumber(ll n, int i, int cnt, ll product){
             power++;
         }
 
-        if(power > 1) return false; //T(n) = 1
+        if(power > 1) return 0; //T(n) = 1
         return isSphenicNumber(n, i + 1, cnt + 1, product * i); //T(n) = 3 + T(n / i) 
         // (15, 3, 1, 2)
         // (5, 4, 2, 6)
