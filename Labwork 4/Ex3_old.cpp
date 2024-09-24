@@ -55,7 +55,7 @@ int isSphenicNumber(ll n, int i, int cnt, ll product){
     }
     else return isSphenicNumber(n, i + 1, cnt, product); //T(n) = 1 + T(n / i)
 }
-// Complexity: O((logn)^2)
+// Complexity: O(logn)
 
 int main(){
     sieveOfEratosthenes();
