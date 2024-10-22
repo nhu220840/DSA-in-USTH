@@ -26,6 +26,6 @@ int main(){
         if(isCenteredCube(a[i], 1)){
             cout << a[i] << " is centered cube" << endl;
         }
-        else cout << a[i] << " is NOT centerd cube" << endl;
+        else cout << a[i] << " is NOT centered cube" << endl;
     }
 }
