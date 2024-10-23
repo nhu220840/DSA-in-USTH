@@ -62,5 +62,6 @@
     "new": "cpp",
     "cmath": "cpp",
     "complex": "cpp"
-  }
+  },
+  "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }

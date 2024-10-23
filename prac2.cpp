@@ -1,63 +1,44 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
 using namespace std;
 
-int primeCheck(int x)
-{
-    if (x <= 1)
-    {
-        return 0;
-    }
-    else if (x <= 3)
-    {
-        return 1;
-    }
-    for (int i = 2; i <= x / 2; i++)
-    {
-        if (x % i == 0)
-        {
-            return 0;
-        }
-    }
-    return 1;
-}
-void getTwoLargestDivisors(int x, int result[2])
-{
-    for (int i = sqrt(x); i <= x / 2; i++)
-    {
-        if (x % i == 0)
-        {
-            result[0] = i;
-            result[1] = x / i;
-            return;
-        }
-    }
-}
-void conquerFactorize(int n)
-{
-    if (primeCheck(n))
-    {
-        cout << n;
-        return;
+double ln2_rec(int n, int maxTerms) {
+    if (n >= maxTerms) return 0.0;
+
+    double term;
+    if (n == 1) {
+        term = 1.0 / 2.0;
+    } else {
+        term = (n % 2 == 0 ? -1.0 : 1.0) / ((n - 1) * n);
     }
 
-    int divisors[2];
-    getTwoLargestDivisors(n, divisors);
-    int A, B;
-    A = divisors[0];
-    B = divisors[1];
-
-    // Recursively factorize each divisor
-    conquerFactorize(A);
-    cout << " * ";
-    conquerFactorize(B);
+    return term + ln2_rec(n + 1, maxTerms);
 }
-int main()
-{
-    int n;
-    cout << "Enter n: ";
-    cin >> n;
-    cout << n << " = ";
-    conquerFactorize(n);
-    cout << endl;
-    return 0;
+
+double calculate(int n){
+    if(n == 0) return 0.5;
+    int sum;
+    if(n % 2 == 0){
+        sum = pow(-1, n) / ((n - 1) * n) + calculate(n - 1);
+    }
+    else sum = pow(1, n + 1) / (n * (n + 1)) + calculate(n - 1);
+    sum += 0.5;
+    return sum;
+}
+
+double ln2_iteration(int n){
+    double sum = 0.5;
+    for(int i = 1; i <= n; i++){
+        sum += pow(-1, n) / (n * (n + 1));
+    }
+    return sum;
+}
+
+int main() {
+    double ln2_approx = calculate(100);
+    cout << ln2_iteration(10);
+
+    // Output the result
+    // cout << "Approximation of ln(2) with n = 10 terms: " << ln2_approx << endl;
+
 }
