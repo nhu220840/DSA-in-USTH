@@ -17,7 +17,7 @@ bool isPrime (int n){
 }
 
 void twinPrimes(int a[], int i, int j, int n){
-    if(i >= n - 1) return;
+    if(i >= n) return;
     if(j >= n) return twinPrimes(a, i + 1, i + 2, n);
 
     if(isPrime(a[i]) && isPrime(a[j]) && abs(a[i] - a[j]) == 2){
@@ -27,7 +27,7 @@ void twinPrimes(int a[], int i, int j, int n){
 }
 
 void twinPrimes_2(int a[], int i, int n){
-    if(i >= n - 1) return;
+    if(i >= n) return;
 
     for(int j = i + 1; j < n; j++){
         if(isPrime(a[i]) && isPrime(a[j]) && abs(a[i] - a[j]) == 2){
@@ -44,4 +44,5 @@ int main(){
     int size = sizeof(a) / sizeof(a[0]);
     // twinPrimes(a, 0, 1, size);
     twinPrimes_2(a, 0, size);
+
 }
