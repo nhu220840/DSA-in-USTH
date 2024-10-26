@@ -38,6 +38,26 @@ Node* insertNumberToList(int n) {
     return head;
 }
 
+void addNumber(Node *&head, int x){
+    Node *newNode = makeNode(x);
+    if(head == nullptr){
+        head = newNode; return;
+    }
+
+    Node *tmp = head;
+    while(tmp->next != nullptr){
+        tmp = tmp->next;
+    }
+    tmp->next = newNode;
+}
+
+void insertNumToList(Node *&head, int n){
+    while(n){
+        int r = n % 10;
+        addNumber(head, r);
+    }
+}
+
 int countOdd_rec(Node* head) {
     if (!head) return 0;
     return (head->data % 2 != 0) + countOdd_rec(head->next);
@@ -52,6 +72,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int n = 3450;
-    Node* head = insertNumberToList(n);
-    cout << countOdd_rec(head) << " " << countEven_rec(head) << endl;
+    // Node* head = insertNumberToList(n);
+    // cout << countOdd_rec(head) << " " << countEven_rec(head) << endl;
+    
 }

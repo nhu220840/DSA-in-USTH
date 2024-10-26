@@ -1,34 +1,56 @@
-/*
-    AUTHOR: Do Nguyen Gia Nhu
-    ID: 22BA13248
-*/
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
 
-#include <iostream>
-#include <cmath>
+//function use recursive
+int reverseNumber(int n){
+    int reversed = 0;
+    while (n > 0){
+        reversed = reversed * 10 + n % 10; 
+        n /= 10;
+    }
+    return reversed;
+}
 
-using namespace std;
-using ll = long long;
+int numDigits(int num){
+    if (num == 0)
+    return 0;
+    return 1 + numDigits(num / 10);
+    
+}
+    int firstDigit(int num, int digits) { // checking first digits
+    return num / (int)pow(10, digits - 1);
+}
+int lastDigits(int num){  //checking last digits
+    return num % 10;
+}
+bool isPalindromic(int n){
+    if (n < 10)     
+        return true;
+    
+    int digits = numDigits(n);
+    int first = firstDigit(n, digits);
+    int last = lastDigits(n);
 
-bool isCenteredCube(int target, int i){
-    long long checkValue = pow(i, 3) + pow(i + 1, 3);
-    // cout << checkValue << endl;
-    if(target < checkValue) return false;
-    if(target == checkValue) return true;
+    if (first != last) 
+    return false;
 
-    return isCenteredCube(target, i + 1);
-
+    int remaining = (n % (int)pow(10, digits - 1)) / 10; 
+    return isPalindromic(remaining);
 }
 
 int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int a[] = {1, 2, 9, 3, 5, 25, 35, 60, 91};
-    int n = sizeof(a) / sizeof(a[0]);
-    for(int i = 0; i < n; i++){
-        if(isCenteredCube(a[i], 0)){
-            cout << a[i] << " is centered cube" << endl;
-        }
-        else cout << a[i] << " is NOT centered cube" << endl;
+    int n;
+    printf("Enter a natural number:");
+    scanf("%d", &n);
+
+    int reversed = reverseNumber(n);
+    int product = n * reversed;
+    if (isPalindromic(product)) {
+        printf("The product of %d and its reverse %d is palindromic.\n", n, reversed);
+    } else {
+        printf("The product of %d and its reverse %d is not palindromic.\n", n, reversed);
     }
-    // cout << isCenteredCube(9, 0);
+
+    return 0;
 }

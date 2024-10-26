@@ -16,15 +16,15 @@ bool isPrime (int n){
     return n > 1;
 }
 
-void twinPrimes(int a[], int i, int j, int n){
-    if(i >= n) return;
-    if(j >= n) return twinPrimes(a, i + 1, i + 2, n);
+// void twinPrimes(int a[], int i, int j, int n){
+//     if(i >= n) return;
+//     if(j >= n) return twinPrimes(a, i + 1, i + 2, n);
 
-    if(isPrime(a[i]) && isPrime(a[j]) && abs(a[i] - a[j]) == 2){
-        cout << "{" << a[i] << ", " << a[j] << "}" << endl;
-    }
-    return twinPrimes(a, i, j + 1, n);
-}
+//     if(isPrime(a[i]) && isPrime(a[j]) && abs(a[i] - a[j]) == 2){
+//         cout << "{" << a[i] << ", " << a[j] << "}" << endl;
+//     }
+//     return twinPrimes(a, i, j + 1, n);
+// }
 
 void twinPrimes_2(int a[], int i, int n){
     if(i >= n) return;

@@ -1,46 +1,61 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
 
-using namespace std;
-using ll = long long;
-
-void bubbleSort(ll a[], int n){
-    bool isSorted = false;
-
-    while(!isSorted){
-        isSorted = true;
-        for(int i = 0; i < n - 1; i++){
-            if(a[i] > a[i + 1]){
-                swap(a[i], a[i + 1]);
-                isSorted = false;
-            }
-        }
-    }
+// Helper function to count digits (moved outside isPalindromic)
+int numDigits(int num) {
+    if (num == 0)
+        return 0;
+    return 1 + numDigits(num / 10);
 }
 
-int main(){
-    ll n; cin >> n;
-    ll a[n];
-    for(int i = 0; i < n; i++){
-        cin >> a[i];
+// Helper function to get first digit (moved outside isPalindromic)
+int firstDigit(int num, int digits) {
+    return num / static_cast<int>(pow(10, digits - 1));
+}
+
+// Helper function to get last digit (moved outside isPalindromic)
+int lastDigits(int num) {
+    return num % 10;
+}
+
+// Function using iteration
+int reverseNumber(int n) {
+    int reversed = 0;
+    while (n > 0) {
+        reversed = reversed * 10 + n % 10;
+        n /= 10;
     }
-    bubbleSort(a, n);
-    for(int x : a) cout << x << " ";
-    cout << endl;
-    bool found = false;
-    for(int i = n - 1; i >= 2; i--){
-        int l = 0, r = i - 1;
-        while(l < r){
-            if(a[l] * a[r] == a[i]){
-                found = true;
-                cout << "(" << a[l] << ", " << a[r] << ", " << a[i] << ")" << endl;
-                l++;
-            }
-            else if(a[l] * a[r] > a[i])
-                r--;
-            else
-                l++;
-        }
+    return reversed;
+}
+
+bool isPalindromic(int n) {
+    if (n < 10)
+        return true;
+    
+    int digits = numDigits(n);
+    int first = firstDigit(n, digits);
+    int last = lastDigits(n);
+
+    if (first != last)
+        return false;
+
+    int remaining = (n % static_cast<int>(pow(10, digits - 1))) / 10;
+    return isPalindromic(remaining);
+}
+
+int main() {
+    int n;
+    std::cout << "Enter a natural number: ";
+    std::cin >> n;
+
+    int reversed = reverseNumber(n);
+    int product = n * reversed;
+    
+    if (isPalindromic(product)) {
+        std::cout << "The product of " << n << " and its reverse " << reversed << " is palindromic.\n";
+    } else {
+        std::cout << "The product of " << n << " and its reverse " << reversed << " is not palindromic.\n";
     }
-    if(found == false) cout << "NO SOLUTION";
+
     return 0;
 }

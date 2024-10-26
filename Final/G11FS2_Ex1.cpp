@@ -23,6 +23,15 @@ void selectionSort(int a[], int n){
     }
 }
 
+// void selectionSortOp(int a[], int n){
+//     for(int i = 0; i < n; i++){
+//         int separate;
+//         for(int j = i + 1; j < n; j++){
+//             if(a[j] > a[j + 1]) 
+//         }
+//     }
+// }
+
 void selectionSortOptimize(int a[], int left, int right){
     int mid = (left + right) / 2;
     int min_pos = 0;
